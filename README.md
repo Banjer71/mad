@@ -1,0 +1,2 @@
+## MAD My Abbreviations Dictionary
+
