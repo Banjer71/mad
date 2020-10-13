@@ -12,7 +12,7 @@
 
 > Create the CRUD basic functionality ...Create, Read, Update, Delete.
 
-> Use the node fs module to write and read a file that I will use a temporary database
+> Use the node fs module to write and read a file that I will use as temporary database
 
 ### Second Step
 
