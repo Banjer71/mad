@@ -1,0 +1,12 @@
+{
+    "data": [
+        {
+            "abr": "CRUD",
+            "words": "Create Read Update Delete"
+        },
+        {
+            "abr": "SRE",
+            "words": "Site Responsability Engineer"
+        }
+    ]
+}
