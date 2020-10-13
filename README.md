@@ -1,4 +1,4 @@
-## MAD 
+# MAD 
 
-# ßMy Abbreviations Dictionary
+## My Abbreviations Dictionary
 
