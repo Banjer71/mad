@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const fs = require('fs');
 const dictionary = require('./dictionary.json')
 
 app.use(express.json());
@@ -12,14 +13,30 @@ app.get('/api/words', (req, res) => {
     res.json(dictionary)
 });
 
-app.post('/api/add/abr', (req, res) => {
+app.get('/api/add/abr/', (req, res) => {
+    res.json(hello)
+})
+
+
+app.post('/api/add/abr/', (req, res) => {
     const newWords = {
         abr: req.body.abr,
         words: req.body.words
     }
 
+    fs.mkdir('database', { recursive: true }, (err) => {
+        if (err) throw err;
+    })
+    fs.writeFile('database/hello.json', `${JSON.stringify(newWords)}`, (err) => {
+        if (err) {
+            console.log(error)
+        } else {
+            console.log('file created')
+        }
+    })
+
     dictionary.data.push(newWords);
-    res.send(dictionary);
+    res.json(dictionary);
 });
 
 
