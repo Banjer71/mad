@@ -4,7 +4,8 @@
   "description": "my abbreviations dictionary",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "server1": "nodemon serverOne.js"
   },
   "repository": {
     "type": "git",

@@ -5,6 +5,10 @@ const dictionary = require('./dictionary.json')
 
 app.use(express.json());
 
+fs.mkdirSync('database', { recursive: true }, (err) => {
+    if (err) throw err;
+})
+
 app.get('/', (req, res) => {
     res.send('Hello Davide')
 });
@@ -19,15 +23,14 @@ app.get('/api/add/abr/', (req, res) => {
 
 
 app.post('/api/add/abr/', (req, res) => {
-    const newWords = {
-        abr: req.body.abr,
-        words: req.body.words
-    }
+    const newWords = [
+        {
+            abr: req.body.abr,
+            words: req.body.words
+        }
+    ]
 
-    fs.mkdir('database', { recursive: true }, (err) => {
-        if (err) throw err;
-    })
-    fs.writeFile('database/hello.json', `${JSON.stringify(newWords)}`, (err) => {
+    fs.appendFile('database/hello.json', `${JSON.stringify(newWords, null, 2)}`, (err) => {
         if (err) {
             console.log(error)
         } else {
