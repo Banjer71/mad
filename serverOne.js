@@ -1,8 +1,10 @@
 const express = require('express');
+const {v4: uudv4, parse} = require("uuid")
 const app = express();
 const fs = require('fs');
 
 app.use(express.json());
+
 
 fs.mkdirSync('serverOne', { recursive: true }, (err) => {
     if (err) throw err;
@@ -21,6 +23,7 @@ app.get('/api/database', (req, res) => {
 app.post('/api/add/shortcut', (req, res) => {
     let myData = { data: [] };
     const newShortCut = {
+        id: parse(uudv4())[0],
         abr: req.body.abr,
         words: req.body.words
     }
@@ -28,6 +31,7 @@ app.post('/api/add/shortcut', (req, res) => {
     if (fs.existsSync('serverOne/myMad.json')) {
         let data = fs.readFileSync('serverOne/myMad.json');
         myData = JSON.parse(data)
+        console.log(myData)
     }
 
     myData.data.push(newShortCut);
