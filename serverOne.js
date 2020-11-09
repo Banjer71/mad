@@ -32,22 +32,10 @@ app.get('/', (req, res) => {
 })
 
 app.get('/api/database', (req, res) => {
-
     res.send(myData)
 })
 
-app.get('/api/database/:abr/:words', (req, res) => {
-    let usr = req.params
-    let abr = usr.abr
-    let words = usr.words
-    // let abr = usr.find(user => user.id === parseInt(req.params.id))
-    // if(abr) {
-    //     res.json({id: `${req.params.id}`, abr: `${req.params.abr}`, words: `${req.params.words}`})
-    // }
-    res.send(`${abr} ${words}`)
-})
-
-app.post('/api/add/shortcut/:id', (req, res) => {
+app.post('/api/add/shortcut/:abr/:words', (req, res) => {
 
     const newShortCut = {
         id: parse(uudv4())[0],
@@ -62,8 +50,31 @@ app.post('/api/add/shortcut/:id', (req, res) => {
         console.log("file myMad.json has been written")
     });
 
-    res.json(myData);
+    res.send(myData);
 });
+
+app.put('/:id', (req, res) => {
+    const found = myData.find(user => user.id === parseInt(req.params.id));
+
+    if (found) {
+        const updateUsr = req.body;
+        myData.forEach(user => {
+            if ( user.id === parseInt(req.params.id)) {
+                user.abr = updateUsr.abr ? updateUsr.abr : user.abr;
+                user.words = updateUsr.words ? updateUsr.words : user.words;
+
+                fs.writeFile('serverOne/myMad.json', JSON.stringify(myData, null, 2), (err) => {
+                    if (err) throw err;
+                    console.log("file myMad.json has been written")
+                });
+                res.json({message: 'Abr has been updated', user})
+            } 
+        })
+         
+    } else {
+        res.status(400).json({ message: `user id ${req.params.id} has not been found` })
+    }
+})
 
 app.delete('/api/del/:id', (req, res) => {
     const found = myData.find(user => user.id === parseInt(req.params.id));
@@ -85,6 +96,17 @@ app.delete('/api/del/:id', (req, res) => {
         res.status(400).json({ message: `user id ${req.params.id} has not been found` })
     }
 })
+
+app.delete('/api/del', (req, res) => {
+    myData = myData.filter(user => user.name === parseInt(req.params.name))
+
+    fs.writeFile('serverOne/myMad.json', JSON.stringify(myData, null, 2), (err) => {
+        if (err) throw err;
+        console.log("file myMad.json has been written")
+    });
+    res.json(myData)
+})
+
 
 
 const PORT = 4001;
